@@ -15,7 +15,7 @@
  * To make the second one happen, the number to change
  * is the first argument to `repeat`, currently set at 10.
  */
-const gridWidth = 10;
+const gridWidth = 20;
 let count = 0;
 while (count <= gridWidth * gridWidth) {
   const canvas = document.querySelector('.canvas');
@@ -49,6 +49,15 @@ while (count <= gridWidth * gridWidth) {
 // Add queries for all your squares, palette colors, and brush here.
 // (Note the singular or plural used in that sentence!)
 
+let brush = document.querySelector('.current-brush');
+
+let app = document.querySelector('.app');
+
+let palette = document.querySelectorAll('.palette div');
+
+let canvasSquares = document.querySelectorAll('.canvas div');
+
+
 
 
 /****************************
@@ -60,6 +69,71 @@ while (count <= gridWidth * gridWidth) {
 // empty at first, though a console.log just to know they're being
 // run as event listeners (after the next step is set up) isn't a
 // bad idea for testing purposes.
+
+brush.addEventListener('click', function(){
+
+  console.log("current brush");
+});
+
+for(let i = 0; i < palette.length; i++){
+  palette[i].addEventListener('click', function(){
+    console.log(palette[i].classList);
+    brush.classList.replace(brush.classList[1],palette[i].classList[1]);
+  });
+}
+
+for(let i = 0; i < canvasSquares.length; i++){
+ canvasSquares[i].addEventListener('click', function(){
+  console.log(canvasSquares[i].classList);
+  canvasSquares[i].classList.replace(canvasSquares[i].classList[1], brush.classList[1]);
+ });
+
+}
+
+let isMouseDown = false;
+for(let square of canvasSquares){
+{
+  square.addEventListener('click', function(){
+    // console.log(square.classList);
+    isMouseDown = false;
+    square.classList.replace(square.classList[1], brush.classList[1]);
+  })
+}
+}
+
+
+// mouseenter code will be below
+for(let square of canvasSquares){
+// square.addEventListener('mouseenter', function(){
+//   square.classList.replace(square.classList[1], brush.classList[1]);
+// });
+
+
+square.addEventListener('mouseover', function(){
+  if(isMouseDown === true) {
+    square.classList.replace(square.classList[1],brush.classList[1]);
+  }
+})
+}
+//mousedown - checks if user left clicks and holds
+//mouseup - checks for when user releases that left click
+
+app.addEventListener('mousedown', function(){
+  console.log('Mouse is down');
+  isMouseDown = true;
+  console.log(`isMouseDown: ${isMouseDown}`);
+});
+
+app.addEventListener('mouseup', function(){
+  console.log('Mouse is up');
+  isMouseDown = false;
+  console.log(`isMouseDown: ${isMouseDown}`);
+});
+
+
+
+
+
 
 
 
